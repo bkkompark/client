@@ -46,8 +46,8 @@ export const Trainer = () => {
         </thead>
         <tbody>
           {trainers.map((user, index) => {
-            const authenticationURL = (user: any) => {
-              const targetUrl = `http://localhost:8080/trainers/authentication/${user.email}`;
+            const authenticationURL = (userEmail: any) => {
+              const targetUrl = `http://localhost:8080/trainers/authentication/${userEmail}`;
               window.location.href = targetUrl;
             };
 
