@@ -7,7 +7,18 @@ const Login = () => {
   const [searchParams] = useSearchParams();
   const type = searchParams.get("type");
 
-  return <>{user ? <></> : <LoginForm type={type} setUser={setUser} />}</>;
+    return (
+        <>
+            {user ? (
+                <></>
+            ) : (
+                <LoginForm
+                    type={type}
+                    setUser={setUser}
+                />
+            )}
+        </>
+    );
 };
 
 export default Login;
