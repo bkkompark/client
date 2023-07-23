@@ -1,83 +1,65 @@
 import { useState, useEffect } from "react";
 import { TrainerApi } from "../../api";
 
-export const TrainerAll = () => {
+export const TrainerTable = () => {
   const [loading, setLoading] = useState(true);
-  const [trainers, setTrainers] = useState([]);
+  const [users, setUsers] = useState<any>([]);
 
-  const getTrainers = async () => {
+  const getUsers = async () => {
     const { data } = await TrainerApi.getTrainerAll();
-    console.log(data);
-    setTrainers(data);
+    const { data: data2 } = await TrainerApi.getUnknownAll();
+    setUsers(data.map((i: any) => ({ ...i, role: "Trainer" })));
+    setUsers((users: any[]) => [
+      ...users,
+      ...data2.map((i: any) => ({ ...i, role: "Unknown" })),
+    ]);
+    console.log(users);
     setLoading(false);
   };
 
   useEffect(() => {
-    getTrainers();
-  }, []);
+    getUsers();
+  }, [loading]);
 
-  return (
-    <>
-      {trainers.map((trainer: any, index: any) => {
-        return (
-          <tr key={trainer.phone}>
-            <td>{index + 1}</td>
-            <td>{trainer.name}</td>
-            <td>{trainer.gender}</td>
-            <td>{trainer.age}</td>
-            <td>{trainer.phone}</td>
-            <td>트레이너</td>
-            {/* <td>
-              <button
-                onClick={async () => {
-                  const { data } = await TrainerApi.allowTrainer(trainer.name);
-                  console.log("allow trainer: " + data);
-                }}
-              >
-                권한 부여
-              </button>
-            </td> */}
-          </tr>
-        );
-      })}
-    </>
-  );
+  return <>{!loading && <Table title={"트레이너 목록"} arr={users} />}</>;
 };
 
-export const TrainerUnknownAll = () => {
-  const [loading, setLoading] = useState(true);
-  const [unknownTrainers, setUnknownTrainers] = useState([]);
-
-  const getUnknownTrainers = async () => {
-    const { data } = await TrainerApi.getUnknownAll();
-    setUnknownTrainers(data);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    getUnknownTrainers();
-  }, []);
+export const Table = <T extends {}>({
+  title,
+  arr,
+}: {
+  title: string;
+  arr: T[];
+}) => {
+  return (
+    <>
+      <h1>{title}</h1>
+      <table>
+        <thead>
+          <tr>
+            {Object.keys(arr[0]).map((col, index) => (
+              <th key={index}>{col}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {arr.map((obj, index) => (
+            <tr key={index}>
+              {Object.values(obj).map((value: any, index) => (
+                <td key={index}>{value}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
+  );
 };
 
 export const Admin = () => {
   return (
     <>
-      <h1>트레이너 목록</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>NO</th>
-            <th>이름</th>
-            <th>성별</th>
-            <th>나이</th>
-            <th>연락처</th>
-            <th>권한</th>
-          </tr>
-        </thead>
-        <tbody>
-          <TrainerAll />
-        </tbody>
-      </table>
+      <TrainerTable />
     </>
   );
 };
