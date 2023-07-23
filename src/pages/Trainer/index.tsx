@@ -1,4 +1,6 @@
-const trainers = [
+import TrainerApi from "../../api/TrainerApi";
+
+const users = [
   {
     email: "my-email",
     name: "test",
@@ -29,10 +31,30 @@ const trainers = [
   },
 ];
 
+const UserDetail = ({
+  username,
+  gender,
+  age,
+  phone,
+}: {
+  username: string;
+  gender: string;
+  age: number;
+  phone: string;
+}) => {
+  const targetUrl = `http://localhost:3000/trainer/${username}`;
+  window.location.href = targetUrl;
+  return (
+    <>
+      <h1>{username}</h1>
+    </>
+  );
+};
+
 export const Trainer = () => {
   return (
     <>
-      <h1>트레이너 목록</h1>
+      <h1>회원 목록</h1>
       <table>
         <thead>
           <tr>
@@ -41,31 +63,31 @@ export const Trainer = () => {
             <th>성별</th>
             <th>나이</th>
             <th>연락처</th>
-            <th>권한</th>
           </tr>
         </thead>
         <tbody>
-          {trainers.map((user, index) => {
-            const authenticationURL = (userEmail: any) => {
-              const targetUrl = `http://localhost:8080/trainers/authentication/${userEmail}`;
-              window.location.href = targetUrl;
-            };
-
-            return (
-              <tr key={user.email}>
-                <td>{index + 1}</td>
-                <td>{user.name}</td>
-                <td>{user.gender}</td>
-                <td>{user.age}</td>
-                <td>{user.phone}</td>
-                <td>
-                  <button onClick={() => authenticationURL(user.email)}>
-                    권한 부여
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
+          {users.map((user, index) => (
+            <tr key={user.email}>
+              <td>{index + 1}</td>
+              <td>
+                <div
+                  onClick={() =>
+                    UserDetail({
+                      username: user.name,
+                      gender: user.gender,
+                      age: user.age,
+                      phone: user.phone,
+                    })
+                  }
+                >
+                  {user.name}
+                </div>
+              </td>
+              <td>{user.gender}</td>
+              <td>{user.age}</td>
+              <td>{user.phone}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </>
