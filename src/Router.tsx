@@ -9,7 +9,6 @@ import Join from "./pages/Join";
 import Trainers from "./pages/Trainer";
 import Trainer from "./pages/Trainer";
 import Admin from "./pages/Admin";
-import Detail from "./pages/Trainer/Detail";
 
 const router = createBrowserRouter(
   [
@@ -39,12 +38,6 @@ const router = createBrowserRouter(
             {
               path: "trainer",
               element: <Trainer />,
-              //   children: [
-              //     {
-              //       path: ":detail",
-              //       element: <Detail />,
-              //     },
-              //   ],
             },
             {
               path: "admin",
