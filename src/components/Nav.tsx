@@ -5,8 +5,7 @@ const Nav = () => {
         <>
             <Link to="/">Home</Link>&nbsp;
             <Link to="/about">About</Link>&nbsp;
-            <Link to="/join?type=Trainer">Join</Link>&nbsp;
-            <Link to="/login?type=Trainer">Login</Link>&nbsp;
+            <Link to="/logout">logout</Link>&nbsp;
         </>
     );
 };
