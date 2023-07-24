@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 const axios = Axios.create({
-    baseURL: "/api",
+    baseURL: "/test",
     timeout: 3000,
     headers: {
         "Content-Type": "application/json",
@@ -20,8 +20,9 @@ function App() {
     useEffect(() => {
         (async () => {
             const { data } = await axios.get("/data");
-            if (data?.loggedIn === false) return navigation("/login");
             console.log(data);
+            if (data?.loggedIn) return;
+            navigation("/login");
         })();
     }, []);
 
