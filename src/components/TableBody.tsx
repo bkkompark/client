@@ -3,14 +3,19 @@ import TrainerApi from "../api/TrainerApi";
 
 interface TableBodyProps {
   users: any[];
+  onRefresh: any;
 }
 
-const TableBody = ({ users }: TableBodyProps) => {
-  const handleGrantTrainer = async (userId: any) => {
-    const { data } = await TrainerApi.allowTrainer(userId);
-    console.log(data);
-  };
+const handleGrantTrainer = async (userId: any, onRefresh: any) => {
+  const { data } = await TrainerApi.allowTrainer(userId);
+  console.log(data);
+  setTimeout(() => {
+    onRefresh();
+    console.log("완료");
+  }, 100);
+};
 
+const TableBody = ({ users, onRefresh }: TableBodyProps) => {
   return (
     <>
       <tbody>
@@ -26,7 +31,7 @@ const TableBody = ({ users }: TableBodyProps) => {
               <td></td>
             ) : (
               <td>
-                <button onClick={() => handleGrantTrainer(user.id)}>
+                <button onClick={() => handleGrantTrainer(user.id, onRefresh)}>
                   권한 부여
                 </button>
               </td>

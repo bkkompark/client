@@ -25,7 +25,7 @@ const TrainerAll = () => {
         <TableHeader
           columns={["email", "name", "gender", "age", "phone", "role"]}
         />
-        <TableBody users={users} />
+        <TableBody users={users} onRefresh={getUsers} />
       </table>
     </>
   );
