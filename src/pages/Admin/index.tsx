@@ -1,11 +1,7 @@
 import { useState, useEffect } from "react";
 import { TrainerApi } from "../../api";
-// import Table from "../../components/Table";
-
-const handleGrantTrainer = async (userId: any) => {
-  const { data } = await TrainerApi.allowTrainer(userId);
-  console.log(data);
-};
+import TableHeader from "../../components/TableHeader";
+import TableBody from "../../components/TableBody";
 
 const TrainerAll = () => {
   const [loading, setLoading] = useState(true);
@@ -40,32 +36,8 @@ const TrainerAll = () => {
         <>
           <h1>트레이너 목록</h1>
           <table>
-            <thead>
-              <tr>
-                {Object.keys(users[0]).map((col, index) => (
-                  <th key={index}>{col}</th>
-                ))}
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((user: any) => (
-                <tr key={user.id}>
-                  {Object.values(user).map((value: any, index) => (
-                    <td key={index}>{value}</td>
-                  ))}
-                  {user.role === "Trainer" ? (
-                    <td></td>
-                  ) : (
-                    <td>
-                      <button onClick={() => handleGrantTrainer(user.id)}>
-                        권한 부여
-                      </button>
-                    </td>
-                  )}
-                </tr>
-              ))}
-            </tbody>
+            <TableHeader columns={Object.keys(users[0])} />
+            <TableBody users={users} />
           </table>
         </>
       )}
