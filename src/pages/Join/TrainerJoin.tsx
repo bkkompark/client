@@ -1,18 +1,23 @@
-import LinkJoin from "./LinkJoin";
 import { useForm } from "../../hooks/useForm";
-import { getData } from "../../util/getData";
-
-//username, password, passwordConfirm, gender, age, phone
+import { UserApi } from "../../api";
+import { JoinObject } from "../../api/UserApi";
 
 const TrainerJoin = ({ type }: { type: string | null }) => {
-    const [values, handleChange, handleSubmit, error] = useForm({}, async (a: any) => {
+    const [values, handleChange, handleSubmit, error] = useForm<JoinObject | {}>({}, async (a: any) => {
         console.log(a);
 
-        const data = getData(values);
+        const { data } = await UserApi.join(values);
+        console.log(data);
     });
     return (
         <form onSubmit={handleSubmit}>
             <h1>{type} 회원가입</h1>
+            <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                onChange={handleChange}
+            />
             <input
                 type=""
                 name="name"
@@ -23,12 +28,6 @@ const TrainerJoin = ({ type }: { type: string | null }) => {
                 type="number"
                 name="age"
                 placeholder="Age"
-                onChange={handleChange}
-            />
-            <input
-                type="id"
-                name="username"
-                placeholder="ID"
                 onChange={handleChange}
             />
             <input

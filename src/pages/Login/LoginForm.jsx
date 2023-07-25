@@ -6,20 +6,20 @@ const LoginForm = () => {
     const navigation = useNavigate();
 
     const useSubmit = async (obj) => {
-        const { username: name, password } = obj;
-        const { data } = await UserApi.login(name, password);
-        if (data.role === "Admin" || data.role === "Trainer") navigation("/");
+        const { email, password } = obj;
+        const { data } = await UserApi.login(email, password);
+        if (typeof data.role === typeof "") navigation("/");
         console.log(data);
     };
 
-    const [, handleChange, handleSubmit] = useForm({ id: "", password: "" }, useSubmit);
+    const [, handleChange, handleSubmit] = useForm({ email: "", password: "" }, useSubmit);
 
     return (
         <form onSubmit={handleSubmit}>
             <h1> 로그인</h1>
             <input
-                type="id"
-                name="username"
+                type="email"
+                name="email"
                 placeholder="ID"
                 onChange={handleChange}
             />
