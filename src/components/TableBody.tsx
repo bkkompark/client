@@ -1,23 +1,27 @@
+import { useState, useEffect } from "react";
 import TrainerApi from "../api/TrainerApi";
 
 interface TableBodyProps {
   users: any[];
 }
 
-const handleGrantTrainer = async (userId: any) => {
-  const { data } = await TrainerApi.allowTrainer(userId);
-  console.log(data);
-};
-
 const TableBody = ({ users }: TableBodyProps) => {
+  const handleGrantTrainer = async (userId: any) => {
+    const { data } = await TrainerApi.allowTrainer(userId);
+    console.log(data);
+  };
+
   return (
     <>
       <tbody>
         {users.map((user: any) => (
-          <tr key={user.id}>
-            {Object.values(user).map((value: any, index) => (
-              <td key={index}>{value}</td>
-            ))}
+          <tr>
+            <td>{user.email}</td>
+            <td>{user.name}</td>
+            <td>{user.gender}</td>
+            <td>{user.age}</td>
+            <td>{user.phone}</td>
+            <td>{user.role}</td>
             {user.role === "Trainer" ? (
               <td></td>
             ) : (

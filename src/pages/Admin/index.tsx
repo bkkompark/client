@@ -10,19 +10,7 @@ const TrainerAll = () => {
   const getUsers = async () => {
     const { data: users } = await TrainerApi.getUserAll();
     console.log(users);
-    setUsers(
-      users.map(
-        ({ email, name, gender, age, phone, role }: any, index: any) => ({
-          index,
-          email,
-          name,
-          gender,
-          age,
-          phone,
-          role,
-        })
-      )
-    );
+    setUsers(users);
     setLoading(false);
   };
 
@@ -32,15 +20,13 @@ const TrainerAll = () => {
 
   return (
     <>
-      {!loading && (
-        <>
-          <h1>트레이너 목록</h1>
-          <table>
-            <TableHeader columns={Object.keys(users[0])} />
-            <TableBody users={users} />
-          </table>
-        </>
-      )}
+      <h1>트레이너 목록</h1>
+      <table>
+        <TableHeader
+          columns={["email", "name", "gender", "age", "phone", "role"]}
+        />
+        <TableBody users={users} />
+      </table>
     </>
   );
 };
