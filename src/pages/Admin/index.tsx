@@ -1,16 +1,21 @@
 import { useState, useEffect } from "react";
 import { TrainerApi } from "../../api";
-import Table from "../../components/Table";
+// import Table from "../../components/Table";
 
-export const TrainerAll = () => {
+const handleGrantTrainer = async (userId: any) => {
+  const { data } = await TrainerApi.allowTrainer(userId);
+  console.log(data);
+};
+
+const TrainerAll = () => {
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState<any>([]);
 
   const getUsers = async () => {
-    const { data } = await TrainerApi.getUserAll();
-    console.log(data);
+    const { data: users } = await TrainerApi.getUserAll();
+    console.log(users);
     setUsers(
-      data.map(
+      users.map(
         ({ email, name, gender, age, phone, role }: any, index: any) => ({
           index,
           email,
@@ -22,7 +27,6 @@ export const TrainerAll = () => {
         })
       )
     );
-    // console.log(users);
     setLoading(false);
   };
 
@@ -30,7 +34,43 @@ export const TrainerAll = () => {
     getUsers();
   }, [loading]);
 
-  return <>{!loading && <Table title={"트레이너 목록"} arr={users} />}</>;
+  return (
+    <>
+      {!loading && (
+        <>
+          <h1>트레이너 목록</h1>
+          <table>
+            <thead>
+              <tr>
+                {Object.keys(users[0]).map((col, index) => (
+                  <th key={index}>{col}</th>
+                ))}
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.map((user: any) => (
+                <tr key={user.id}>
+                  {Object.values(user).map((value: any, index) => (
+                    <td key={index}>{value}</td>
+                  ))}
+                  {user.role === "Trainer" ? (
+                    <td></td>
+                  ) : (
+                    <td>
+                      <button onClick={() => handleGrantTrainer(user.id)}>
+                        권한 부여
+                      </button>
+                    </td>
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
+    </>
+  );
 };
 
 export const Admin = () => {
