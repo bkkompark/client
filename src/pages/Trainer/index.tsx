@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import TableHeader from "../../components/TableHeader";
 import UserDetail from "./UseDetail";
 
@@ -43,13 +42,18 @@ const users = [
 ];
 
 const UserTable = () => {
+  const [selectedUser, setSelectedUser] = useState(null);
+
+  const handleBtnClicked = (userId: any) => {
+    // 버튼을 클릭하면 선택한 사용자의 id를 상태에 저장
+    setSelectedUser(userId);
+  };
+
   return (
     <>
       <h1>회원 목록</h1>
       <table>
-        <TableHeader
-          columns={["email", "name", "gender", "age", "phone", "role"]}
-        />
+        <TableHeader columns={["email", "name", "gender", "age", "phone"]} />
         <tbody>
           {users.map((user: any) => (
             <tr key={user.id}>
@@ -58,26 +62,24 @@ const UserTable = () => {
               <td>{user.gender}</td>
               <td>{user.age}</td>
               <td>{user.phone}</td>
-              <td>{user.role}</td>
+              <button onClick={() => handleBtnClicked(user.id)}>
+                상세 정보
+              </button>
             </tr>
           ))}
         </tbody>
       </table>
+      {selectedUser && (
+        <UserDetail user={users.find((user) => user.id === selectedUser)} />
+      )}
     </>
   );
 };
 
 export const Trainer = () => {
-  const [clicked, setClicked] = useState(false);
-  const handleBtnClicked = () => {
-    setClicked((prev) => !prev);
-  };
-
   return (
     <>
       <UserTable />
-      <button onClick={handleBtnClicked}>상세 정보</button>
-      {clicked && <UserDetail users={users} />}
     </>
   );
 };
