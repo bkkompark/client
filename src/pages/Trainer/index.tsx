@@ -1,4 +1,7 @@
-import TrainerApi from "../../api/TrainerApi";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import TableHeader from "../../components/TableHeader";
+import UserDetail from "./UseDetail";
 
 const users = [
   {
@@ -7,89 +10,74 @@ const users = [
     gender: "male",
     age: 12,
     phone: "010-0000-0000",
+    id: "1",
+    role: "User",
   },
   {
-    email: "my-email22", // key
+    email: "my-email22",
     name: "test2",
     gender: "female",
     age: 34,
     phone: "010-0000-0120",
+    id: "2",
+    role: "User",
   },
   {
-    email: "my-email33", // key
+    email: "my-email33",
     name: "test3",
     gender: "female",
     age: 55,
     phone: "010-0000-0120",
+    id: "3",
+    role: "User",
   },
   {
-    email: "my-email44", // key
+    email: "my-email44",
     name: "test4",
     gender: "male",
     age: 66,
     phone: "010-0000-0120",
+    id: "4",
+    role: "User",
   },
 ];
 
-const UserDetail = ({
-  username,
-  gender,
-  age,
-  phone,
-}: {
-  username: string;
-  gender: string;
-  age: number;
-  phone: string;
-}) => {
-  const targetUrl = `http://localhost:3000/trainer/${username}`;
-  window.location.href = targetUrl;
+const UserTable = () => {
   return (
     <>
-      <h1>{username}</h1>
+      <h1>회원 목록</h1>
+      <table>
+        <TableHeader
+          columns={["email", "name", "gender", "age", "phone", "role"]}
+        />
+        <tbody>
+          {users.map((user: any) => (
+            <tr key={user.id}>
+              <td>{user.email}</td>
+              <td>{user.name}</td>
+              <td>{user.gender}</td>
+              <td>{user.age}</td>
+              <td>{user.phone}</td>
+              <td>{user.role}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </>
   );
 };
 
 export const Trainer = () => {
+  const [clicked, setClicked] = useState(false);
+  const handleBtnClicked = () => {
+    setClicked((prev) => !prev);
+  };
+
   return (
     <>
-      <h1>회원 목록</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>NO</th>
-            <th>이름</th>
-            <th>성별</th>
-            <th>나이</th>
-            <th>연락처</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user, index) => (
-            <tr key={user.email}>
-              <td>{index + 1}</td>
-              <td>
-                <div
-                  onClick={() =>
-                    UserDetail({
-                      username: user.name,
-                      gender: user.gender,
-                      age: user.age,
-                      phone: user.phone,
-                    })
-                  }
-                >
-                  {user.name}
-                </div>
-              </td>
-              <td>{user.gender}</td>
-              <td>{user.age}</td>
-              <td>{user.phone}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <UserTable />
+      <button onClick={handleBtnClicked}>상세 정보</button>
+      {clicked && <UserDetail users={users} />}
     </>
   );
 };

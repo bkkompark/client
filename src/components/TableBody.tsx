@@ -9,10 +9,7 @@ interface TableBodyProps {
 const handleGrantTrainer = async (userId: any, onRefresh: any) => {
   const { data } = await TrainerApi.allowTrainer(userId);
   console.log(data);
-  setTimeout(() => {
-    onRefresh();
-    console.log("완료");
-  }, 100);
+  onRefresh();
 };
 
 const TableBody = ({ users, onRefresh }: TableBodyProps) => {
@@ -20,7 +17,7 @@ const TableBody = ({ users, onRefresh }: TableBodyProps) => {
     <>
       <tbody>
         {users.map((user: any) => (
-          <tr>
+          <tr key={user.id}>
             <td>{user.email}</td>
             <td>{user.name}</td>
             <td>{user.gender}</td>
