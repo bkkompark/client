@@ -1,19 +1,16 @@
 import { useState, useEffect } from "react";
 import { TrainerApi } from "../../api";
+import TableHeader from "../../components/TableHeader";
+import TableBody from "../../components/TableBody";
 
-export const TrainerTable = () => {
+const TrainerAll = () => {
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState<any>([]);
 
   const getUsers = async () => {
-    const { data } = await TrainerApi.getTrainerAll();
-    const { data: data2 } = await TrainerApi.getUnknownAll();
-    setUsers(data.map((i: any) => ({ ...i, role: "Trainer" })));
-    setUsers((users: any[]) => [
-      ...users,
-      ...data2.map((i: any) => ({ ...i, role: "Unknown" })),
-    ]);
+    const { data: users } = await TrainerApi.getUserAll();
     console.log(users);
+    setUsers(users);
     setLoading(false);
   };
 
@@ -21,36 +18,14 @@ export const TrainerTable = () => {
     getUsers();
   }, [loading]);
 
-  return <>{!loading && <Table title={"트레이너 목록"} arr={users} />}</>;
-};
-
-export const Table = <T extends {}>({
-  title,
-  arr,
-}: {
-  title: string;
-  arr: T[];
-}) => {
   return (
     <>
-      <h1>{title}</h1>
+      <h1>트레이너 목록</h1>
       <table>
-        <thead>
-          <tr>
-            {Object.keys(arr[0]).map((col, index) => (
-              <th key={index}>{col}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {arr.map((obj, index) => (
-            <tr key={index}>
-              {Object.values(obj).map((value: any, index) => (
-                <td key={index}>{value}</td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
+        <TableHeader
+          columns={["email", "name", "gender", "age", "phone", "role"]}
+        />
+        <TableBody users={users} onRefresh={getUsers} />
       </table>
     </>
   );
@@ -59,7 +34,7 @@ export const Table = <T extends {}>({
 export const Admin = () => {
   return (
     <>
-      <TrainerTable />
+      <TrainerAll />
     </>
   );
 };
