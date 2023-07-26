@@ -1,19 +1,25 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
 import { UserApi } from "../../api";
 
-const LoginForm = ({ type, setUser }) => {
-    const [values, handleChange, handleSubmit] = useForm({ id: "", password: "" }, async (obj) => {
-        const { username: name, password } = obj;
-        const { data, status } = await UserApi.login(name, password);
-        console.log(status, data);
-    });
+const LoginForm = () => {
+    const navigation = useNavigate();
+
+    const useSubmit = async (obj) => {
+        const { email, password } = obj;
+        const { data } = await UserApi.login(email, password);
+        if (typeof data.role === typeof "") navigation("/");
+        console.log(data);
+    };
+
+    const [, handleChange, handleSubmit] = useForm({ email: "", password: "" }, useSubmit);
+
     return (
         <form onSubmit={handleSubmit}>
-            <h1>{type} 로그인</h1>
+            <h1> 로그인</h1>
             <input
-                type="id"
-                name="username"
+                type="email"
+                name="email"
                 placeholder="ID"
                 onChange={handleChange}
             />
@@ -27,11 +33,6 @@ const LoginForm = ({ type, setUser }) => {
                 type="submit"
                 value="로그인"
             />
-            <div>
-                <Link to="/login?type=Manager">Manager Login &rarr;</Link>
-                <br />
-                <Link to="/login?type=Trainer">Trainer Login &rarr;</Link>
-            </div>
         </form>
     );
 };

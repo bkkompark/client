@@ -13,6 +13,7 @@ const TrainerApi = {
     getTrainerAll: () => axios.get("/"),
     getUnknownAll: () => axios.get("/authentication"),
     allowTrainer: (id: string) => axios.patch(`/authentication/${id}`),
+    getUserAll: () => axios.get("/all"),
 };
 
 export default TrainerApi;
