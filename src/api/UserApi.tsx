@@ -1,16 +1,14 @@
 import Axios from "axios";
 
-export type JoinObject =
-    | {}
-    | {
-          name: string;
-          password: string;
-          passwordConfirm: string;
-          gender: "남자" | "여자";
-          age: number;
-          phone: string;
-          email: string;
-      };
+export type JoinObject = {
+    name: string;
+    password: string;
+    passwordConfirm: string;
+    gender: "남자" | "여자";
+    age: number;
+    phone: string;
+    email: string;
+};
 
 const axios = Axios.create({
     baseURL: "/api",
@@ -23,7 +21,7 @@ const axios = Axios.create({
 
 const UserApi = {
     login: (email: string, password: string) => axios.post("login", { email, password }),
-    logout: () => axios.get("logout"),
+    logout: () => axios.post("logout"),
     join: (obj: JoinObject) => axios.post("/join", obj),
 };
 
