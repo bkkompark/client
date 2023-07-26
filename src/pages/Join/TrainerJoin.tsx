@@ -1,14 +1,61 @@
 import { useForm } from "../../hooks/useForm";
-import { UserApi } from "../../api";
+
 import { JoinObject } from "../../api/UserApi";
 
-const TrainerJoin = ({ type }: { type: string | null }) => {
-    const [values, handleChange, handleSubmit, error] = useForm<JoinObject | {}>({}, async (a: any) => {
-        console.log(a);
+export type JoinErrorObject = {
+    name?: string;
+    password?: string;
+    passwordConfirm?: string;
+    gender?: "남자" | "여자";
+    age?: number;
+    phone?: string;
+    email?: string;
+};
 
-        const { data } = await UserApi.join(values);
-        console.log(data);
+const errorChecking = (value: JoinObject) => {
+    const error: JoinErrorObject = {};
+
+    if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/i.test(value.password)) {
+        error.password = "비밀번호는 문자, 숫자, 특수문자가 모두 포함 되어야 하고 8자리 이상이어야 합니다.";
+    }
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i.test(value.email)) {
+        error.email = "이메일 형식에 맞지 않습니다.";
+    }
+
+    if (!/^010-\d{4}-\d{4}$/i.test(value.phone)) {
+        error.phone = "번호 형식은 010-0000-0000 이어야 합니다.";
+    }
+
+    if (value.password !== value.passwordConfirm) {
+        error.passwordConfirm = "비밀번호가 일치하지 않습니다.";
+    }
+
+    (Object.keys(value) as Array<keyof JoinObject>).map((key) => {
+        if (value[key] === "" || value[key] === 0) (error[key] as any) = `입력되지 않았습니다.`;
     });
+
+    return error;
+};
+
+const TrainerJoin = ({ type }: { type: string | null }) => {
+    const [values, handleChange, handleSubmit, error] = useForm<JoinObject>(
+        {
+            name: "",
+            password: "",
+            passwordConfirm: "",
+            gender: "남자",
+            age: 0,
+            phone: "",
+            email: "",
+        },
+        async (a: any) => {
+            console.log(a);
+            console.log(error);
+            // const { data } = await UserApi.join(values);
+            // console.log(data);
+        }
+    );
+
     return (
         <form onSubmit={handleSubmit}>
             <h1>{type} 회원가입</h1>
@@ -19,7 +66,7 @@ const TrainerJoin = ({ type }: { type: string | null }) => {
                 onChange={handleChange}
             />
             <input
-                type=""
+                type="name"
                 name="name"
                 placeholder="NAME"
                 onChange={handleChange}
