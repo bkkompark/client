@@ -1,14 +1,5 @@
 import Axios from "axios";
-
-export type JoinObject = {
-    name: string;
-    password: string;
-    passwordConfirm: string;
-    gender: "남자" | "여자";
-    age: number;
-    phone: string;
-    email: string;
-};
+import { JoinObject } from "../pages/Join/TrainerJoin";
 
 const axios = Axios.create({
     baseURL: "/api",

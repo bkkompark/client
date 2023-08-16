@@ -1,4 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useForm } from "../../hooks/useForm";
+import { TrainerApi, UserApi } from "../../api";
+
 import TableHeader from "../../components/TableHeader";
 import UserDetail from "./UseDetail";
 
@@ -41,6 +44,79 @@ const users = [
   },
 ];
 
+export type enrollObject =
+  | {}
+  | {
+      name: string;
+      gender: "남자" | "여자";
+      age: number;
+      phone: string;
+    };
+
+const UserForm = () => {
+  const fn = async () => {
+    const res = await fetch(`/api/login`, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json", // content가 json 파일
+      },
+      body: JSON.stringify({ email: "aa@naver.com", password: "1212" }),
+    });
+    console.log(await res.json());
+
+    // const response = await fetch(`/trainers`, {
+    //   method: "get",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+    // console.log("fetch ", response);
+    // // console.log(await response.json()); // fetch
+    // const res = await TrainerApi.getTrainerAll(); // axios
+    // console.log("axios ", res);
+  };
+  useEffect(() => {
+    fn();
+  });
+
+  // const [values, handleChange, handleSubmit, error] = useForm<
+  //   enrollObject | {}
+  // >({}, async (a: any) => {
+  //   console.log(a);
+
+  //   const { data } = await UserApi.join(values);
+  //   console.log(data);
+  // });
+
+  return (
+    <>
+      {/* <form onSubmit={handleSubmit}>
+        <h1>회원 등록</h1>
+        <input type="" name="name" placeholder="NAME" onChange={handleChange} />
+        <input
+          type=""
+          name="gender"
+          placeholder="GENDER"
+          onChange={handleChange}
+        />
+        <input
+          type="number"
+          name="age"
+          placeholder="AGE"
+          onChange={handleChange}
+        />
+        <input
+          type=""
+          name="phone"
+          placeholder="PHONE"
+          onChange={handleChange}
+        />
+        <input type="submit" value="회원 등록" />
+      </form> */}
+    </>
+  );
+};
+
 const UserTable = () => {
   const [selectedUser, setSelectedUser] = useState(null);
 
@@ -80,6 +156,7 @@ export const Trainer = () => {
   return (
     <>
       <UserTable />
+      <UserForm />
     </>
   );
 };
