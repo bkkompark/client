@@ -1,19 +1,8 @@
 import Axios from "axios";
-
-export type JoinObject =
-  | {}
-  | {
-      name: string;
-      password: string;
-      passwordConfirm: string;
-      gender: "남자" | "여자";
-      age: number;
-      phone: string;
-      email: string;
-    };
+import { JoinObject } from "../pages/Join/TrainerJoin";
 
 const axios = Axios.create({
-  baseURL: "/api",
+  baseURL: "/",
   timeout: 3000,
   headers: {
     "Content-Type": "application/json",
@@ -26,6 +15,11 @@ const UserApi = {
     axios.post("login", { email, password }),
   logout: () => axios.post("logout"),
   join: (obj: JoinObject) => axios.post("/join", obj),
+  enroll: (name: string, age: number, gender: string, phone: string) =>
+    axios.post("customers", { name, age, gender, phone }),
+  assign: (trainerId: string, customerId: string) =>
+    axios.post("/customers/:trainerId/:customerId", { trainerId, customerId }),
+  getUserAll: () => axios.get("/customers"),
 };
 
 export default UserApi;
