@@ -17,6 +17,8 @@ const UserApi = {
   join: (obj: JoinObject) => axios.post("/join", obj),
   enroll: (name: string, age: number, gender: string, phone: string) =>
     axios.post("customers", { name, age, gender, phone }),
+  assign: (trainerId: string, customerId: string) =>
+    axios.post("/customers/:trainerId/:customerId", { trainerId, customerId }),
   getUserAll: () => axios.get("/customers"),
 };
 
