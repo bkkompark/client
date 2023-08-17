@@ -15,16 +15,24 @@ export type enrollObject = {
 const UserForm = () => {
   // callback 함수
   const enrollUser = async (userInfo: enrollObject) => {
-    console.log(userInfo);
     const { name, age, gender, phone } = userInfo;
-    console.log(name, age, gender, phone);
     const { data } = await UserApi.enroll(name, age, gender, phone);
     console.log(data);
+
+    // const { data2 } = await UserApi.assign(trainerId, customerId);
+    // console.log(data2);
   };
 
   const [values, handleChange, handleSubmit, error] = useForm<enrollObject>(
-    { name: "", age: 0, gender: "여자", phone: "" },
-    enrollUser // callback 함수가 promise를 반환
+    {
+      name: "",
+      age: 0,
+      gender: "남자",
+      phone: "",
+      // trainerId: "",
+      // customerId: "",
+    },
+    enrollUser // callback 함수가 promise 를 반환
   );
 
   return (
@@ -38,18 +46,22 @@ const UserForm = () => {
           placeholder="AGE"
           onChange={handleChange}
         />
-        <input
-          type=""
-          name="gender"
-          placeholder="GENDER"
-          onChange={handleChange}
-        />
+        <select name="gender" onChange={handleChange}>
+          <option value="남자">남자</option>
+          <option value="여자">여자</option>
+        </select>
         <input
           type=""
           name="phone"
           placeholder="PHONE"
           onChange={handleChange}
         />
+        <select name="trainer" id="trainer-select" onChange={handleChange}>
+          <option value="없음">트레이너</option>
+          <option value="kim">Kim</option>
+          <option value="park">Park</option>
+          <option value="lee">Lee</option>
+        </select>
         <input type="submit" value="회원 등록" />
       </form>
     </>
