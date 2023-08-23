@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { CustomerApi } from "../../api";
 import TableHeader from "../../components/TableHeader";
 
-const UserTable = () => {
+const UserTable = ({ trainers }: any) => {
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState<any>([]);
 
@@ -20,6 +20,8 @@ const UserTable = () => {
   useEffect(() => {
     fetchUsers();
   }, [loading]);
+
+  console.log("THIS IS ", trainers);
 
   return (
     <>

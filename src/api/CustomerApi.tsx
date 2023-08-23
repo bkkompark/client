@@ -11,8 +11,13 @@ const axios = Axios.create({
 
 const CustomerApi = {
   getCustomerAll: () => axios.get("/"),
-  enroll: (name: string, age: number, gender: string, phone: string) =>
-    axios.post("/", { name, age, gender, phone }),
+  enroll: (
+    name: string,
+    age: number,
+    gender: string,
+    phone: string,
+    trainer: string
+  ) => axios.post("/", { name, age, gender, phone, trainer }),
   assign: (trainerId: string, customerId: string) =>
     axios.post(`/${trainerId}/${customerId}`, {
       trainerId,

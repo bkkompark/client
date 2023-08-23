@@ -6,13 +6,20 @@ export type enrollObject = {
   age: number;
   gender: "남자" | "여자";
   phone: string;
+  trainerId: string;
 };
 
 const UserForm = () => {
   // callback 함수
   const enrollUser = async (userInfo: enrollObject) => {
-    const { name, age, gender, phone } = userInfo;
-    const { data } = await CustomerApi.enroll(name, age, gender, phone);
+    const { name, age, gender, phone, trainerId } = userInfo;
+    const { data } = await CustomerApi.enroll(
+      name,
+      age,
+      gender,
+      phone,
+      trainerId
+    );
     console.log(data);
   };
 
@@ -22,7 +29,7 @@ const UserForm = () => {
       age: 0,
       gender: "남자",
       phone: "",
-      // trainerId: "",
+      trainerId: "",
       // customerId: "",
     },
     enrollUser // callback 함수가 promise 를 반환
