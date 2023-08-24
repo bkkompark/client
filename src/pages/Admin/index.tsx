@@ -9,7 +9,7 @@ const TrainerAll = () => {
 
   const getUsers = async () => {
     const { data: users } = await TrainerApi.getUserAll();
-    console.log(users);
+    console.log("Trainer", users);
     setUsers(users);
     setLoading(false);
   };

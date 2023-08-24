@@ -6,13 +6,20 @@ export type enrollObject = {
   age: number;
   gender: "남자" | "여자";
   phone: string;
+  trainerId: string;
 };
 
-const UserForm = () => {
+const UserForm = ({ trainers }: any) => {
   // callback 함수
   const enrollUser = async (userInfo: enrollObject) => {
-    const { name, age, gender, phone } = userInfo;
-    const { data } = await CustomerApi.enroll(name, age, gender, phone);
+    const { name, age, gender, phone, trainerId } = userInfo;
+    const { data } = await CustomerApi.enroll(
+      name,
+      age,
+      gender,
+      phone,
+      trainerId
+    );
     console.log(data);
   };
 
@@ -22,7 +29,7 @@ const UserForm = () => {
       age: 0,
       gender: "남자",
       phone: "",
-      // trainerId: "",
+      trainerId: "",
       // customerId: "",
     },
     enrollUser // callback 함수가 promise 를 반환
@@ -49,11 +56,12 @@ const UserForm = () => {
           placeholder="PHONE"
           onChange={handleChange}
         />
-        <select name="trainer" id="trainer-select" onChange={handleChange}>
-          <option value="없음">트레이너</option>
-          <option value="kim">Kim</option>
-          <option value="park">Park</option>
-          <option value="lee">Lee</option>
+        {/* <label htmlFor="trainer-select">트레이너 할당</label> */}
+        <select name="trainerId" onChange={handleChange}>
+          <option value="">트레이너</option>
+          {trainers.map((trainer: any) => (
+            <option value={trainer.id}>{trainer.name}</option>
+          ))}
         </select>
         <input type="submit" value="회원 등록" />
       </form>

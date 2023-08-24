@@ -2,15 +2,14 @@ import { useEffect, useState } from "react";
 import { CustomerApi } from "../../api";
 import TableHeader from "../../components/TableHeader";
 
-const UserTable = () => {
+const UserTable = ({ trainers }: any) => {
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState<any>([]);
 
   const fetchUsers = async () => {
     const response = await CustomerApi.getCustomerAll();
-    console.log(response);
-    console.log(response.data);
-
+    // console.log(response);
+    // console.log(response.data);
     const users = response.data;
 
     setUsers(users);
@@ -36,7 +35,7 @@ const UserTable = () => {
               <td>{user.age}</td>
               <td>{user.gender}</td>
               <td>{user.phone}</td>
-              {/* <td>{user.trainer}</td> */}
+              <td>{user.trainer ? user.trainer.name : ""}</td>
             </tr>
           ))}
         </tbody>
