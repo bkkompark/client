@@ -16,8 +16,8 @@ const CustomerApi = {
     age: number,
     gender: string,
     phone: string,
-    trainer: string
-  ) => axios.post("/", { name, age, gender, phone, trainer }),
+    trainerId: string
+  ) => axios.post("/", { name, age, gender, phone, trainerId }),
   assign: (trainerId: string, customerId: string) =>
     axios.post(`/${trainerId}/${customerId}`, {
       trainerId,

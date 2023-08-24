@@ -9,7 +9,7 @@ export type enrollObject = {
   trainerId: string;
 };
 
-const UserForm = () => {
+const UserForm = ({ trainers }: any) => {
   // callback 함수
   const enrollUser = async (userInfo: enrollObject) => {
     const { name, age, gender, phone, trainerId } = userInfo;
@@ -56,11 +56,12 @@ const UserForm = () => {
           placeholder="PHONE"
           onChange={handleChange}
         />
-        <select name="trainer" id="trainer-select" onChange={handleChange}>
-          <option value="없음">트레이너</option>
-          <option value="kim">Kim</option>
-          <option value="park">Park</option>
-          <option value="lee">Lee</option>
+        {/* <label htmlFor="trainer-select">트레이너 할당</label> */}
+        <select name="trainerId" onChange={handleChange}>
+          <option value="">트레이너</option>
+          {trainers.map((trainer: any) => (
+            <option value={trainer.id}>{trainer.name}</option>
+          ))}
         </select>
         <input type="submit" value="회원 등록" />
       </form>

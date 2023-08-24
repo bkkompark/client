@@ -10,7 +10,7 @@ export const Trainer = () => {
 
   const getTrainers = async () => {
     const { data } = await TrainerApi.getTrainerAll();
-    console.log("trainer : ", data);
+    // console.log("trainer : ", data);
     setData(data);
     setLoading(false);
   };
@@ -21,7 +21,7 @@ export const Trainer = () => {
 
   return (
     <>
-      <UserForm />
+      <UserForm trainers={data} />
       <UserTable trainers={data} />
     </>
   );
