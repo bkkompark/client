@@ -9,7 +9,6 @@ const TableHeader = ({ columns }: TableHeaderProps) => {
         {columns.map((col: string, index: number) => (
           <th key={index}>{col}</th>
         ))}
-        <th></th>
       </tr>
     </thead>
   );

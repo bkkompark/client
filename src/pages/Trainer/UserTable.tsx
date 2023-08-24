@@ -8,9 +8,8 @@ const UserTable = ({ trainers }: any) => {
 
   const fetchUsers = async () => {
     const response = await CustomerApi.getCustomerAll();
-    console.log(response);
-    console.log(response.data);
-
+    // console.log(response);
+    // console.log(response.data);
     const users = response.data;
 
     setUsers(users);
@@ -20,8 +19,6 @@ const UserTable = ({ trainers }: any) => {
   useEffect(() => {
     fetchUsers();
   }, [loading]);
-
-  console.log("THIS IS ", trainers);
 
   return (
     <>
@@ -38,7 +35,7 @@ const UserTable = ({ trainers }: any) => {
               <td>{user.age}</td>
               <td>{user.gender}</td>
               <td>{user.phone}</td>
-              {/* <td>{user.trainer}</td> */}
+              <td>{user.trainer ? user.trainer.name : ""}</td>
             </tr>
           ))}
         </tbody>
