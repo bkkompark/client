@@ -1,3 +1,5 @@
+// isOpen 상태에 따라 모달 창을 열거나 닫는다. users 배열과 모달 창의 열림 여부를 props로 전달하여, 회원상세정보를 모달 창에서 표시한다.
+// 부모로부터 받을 수 있는 props
 const CustomerDetail = ({ userId, user, isOpen, closeModal }: any) => {
   return (
     <>

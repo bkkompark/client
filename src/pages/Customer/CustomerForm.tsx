@@ -60,7 +60,9 @@ const CustomerForm = ({ trainers }: any) => {
         <select name="trainerId" onChange={handleChange}>
           <option value="">트레이너</option>
           {trainers.map((trainer: any) => (
-            <option value={trainer.id}>{trainer.name}</option>
+            <option key={trainer.id} value={trainer.id}>
+              {trainer.name}
+            </option>
           ))}
         </select>
         <input type="submit" value="회원 등록" />
