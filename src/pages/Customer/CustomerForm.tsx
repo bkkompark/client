@@ -9,7 +9,7 @@ export type enrollObject = {
   trainerId: string;
 };
 
-const UserForm = ({ trainers }: any) => {
+const CustomerForm = ({ trainers }: any) => {
   // callback 함수
   const enrollUser = async (userInfo: enrollObject) => {
     const { name, age, gender, phone, trainerId } = userInfo;
@@ -60,7 +60,9 @@ const UserForm = ({ trainers }: any) => {
         <select name="trainerId" onChange={handleChange}>
           <option value="">트레이너</option>
           {trainers.map((trainer: any) => (
-            <option value={trainer.id}>{trainer.name}</option>
+            <option key={trainer.id} value={trainer.id}>
+              {trainer.name}
+            </option>
           ))}
         </select>
         <input type="submit" value="회원 등록" />
@@ -69,4 +71,4 @@ const UserForm = ({ trainers }: any) => {
   );
 };
 
-export default UserForm;
+export default CustomerForm;
