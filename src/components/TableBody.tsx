@@ -29,7 +29,7 @@ const TableBody = ({ users, onRefresh }: TableBodyProps) => {
             ) : (
               <td>
                 <button onClick={() => handleGrantTrainer(user.id, onRefresh)}>
-                  권한 부여
+                  Trainer
                 </button>
               </td>
             )}

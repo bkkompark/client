@@ -9,7 +9,7 @@ const TrainerAll = () => {
 
   const getUsers = async () => {
     const { data: users } = await TrainerApi.getUserAll();
-    console.log("Trainer", users);
+    // console.log("Trainer", users);
     setUsers(users);
     setLoading(false);
   };
@@ -20,10 +20,18 @@ const TrainerAll = () => {
 
   return (
     <>
-      <h1>트레이너 목록</h1>
+      <h1>유저 목록</h1>
       <table>
         <TableHeader
-          columns={["email", "name", "gender", "age", "phone", "role"]}
+          columns={[
+            "email",
+            "name",
+            "gender",
+            "age",
+            "phone",
+            "role",
+            "권한 부여",
+          ]}
         />
         <TableBody users={users} onRefresh={getUsers} />
       </table>
