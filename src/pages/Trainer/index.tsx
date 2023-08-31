@@ -1,17 +1,13 @@
 import { useState, useEffect } from "react";
-
-import CustomerForm from "./CustomerForm";
-import CustomerTable from "./CustomerTable";
 import { TrainerApi } from "../../api";
 
-export const Trainer = () => {
+const Trainer = () => {
   const [loading, setLoading] = useState(true);
-  const [data, setData] = useState<any>([]);
+  const [trainers, setTrainers] = useState<any>([]);
 
   const getTrainers = async () => {
-    const { data } = await TrainerApi.getTrainerAll();
-    // console.log("trainer : ", data);
-    setData(data);
+    const { data: trainers } = await TrainerApi.getTrainerAll();
+    setTrainers(trainers);
     setLoading(false);
   };
 
@@ -21,8 +17,16 @@ export const Trainer = () => {
 
   return (
     <>
-      <CustomerForm trainers={data} />
-      <CustomerTable trainers={data} />
+      <h1>담당 트레이너</h1>
+
+      <select>
+        <option>선택</option>
+        {trainers.map((trainer: any) => (
+          <option key={trainer.id} value={trainer.id}>
+            {trainer.name}
+          </option>
+        ))}
+      </select>
     </>
   );
 };
