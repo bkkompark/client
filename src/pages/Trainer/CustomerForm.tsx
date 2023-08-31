@@ -9,7 +9,7 @@ export type enrollObject = {
   trainerId: string;
 };
 
-const UserForm = ({ trainers }: any) => {
+const CustomerForm = ({ trainers }: any) => {
   // callback 함수
   const enrollUser = async (userInfo: enrollObject) => {
     const { name, age, gender, phone, trainerId } = userInfo;
@@ -69,4 +69,4 @@ const UserForm = ({ trainers }: any) => {
   );
 };
 
-export default UserForm;
+export default CustomerForm;

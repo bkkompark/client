@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
-import UserForm from "./UserForm";
-import UserTable from "./UserTable";
+import CustomerForm from "./CustomerForm";
+import CustomerTable from "./CustomerTable";
 import { TrainerApi } from "../../api";
 
 export const Trainer = () => {
@@ -21,8 +21,8 @@ export const Trainer = () => {
 
   return (
     <>
-      <UserForm trainers={data} />
-      <UserTable trainers={data} />
+      <CustomerForm trainers={data} />
+      <CustomerTable trainers={data} />
     </>
   );
 };
